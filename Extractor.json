@@ -1,0 +1,325 @@
+{
+  "productName": "SSPP",
+  "productType": "2",
+  "fileLocation": "@{outpath}/NB/SSPP/@{JOBID}_@{BATCHID}",
+  "tables": [
+    {
+      "tableName": "NB_SSPP_T",
+      "query": "SELECT set_table.POL_ID \"POL_ID\",set_table.DOC_ID \"DOC_ID\",CityGeneralOff(set_table.POL_ID) \"CITYGO\",GeneralOffTelNo(set_table.POL_ID) \"GOTELNO\",Get_Base_Policy(set_table.POL_ID) \"BASEPLAN\",Get_prop_numberNb(set_table.POL_ID) \"PROPSALNO\",AgentGeneralOff(set_table.POL_ID) \"AGENTGO\",GET_CVG_PERCENT(set_table.POL_ID) \"CVGPERCENT\",Fn_Npd_ISSDTN(SET_TABLE.pol_id) \"ISSDT\",FN_DOC_LOC_GET(set_table.POL_ID) \"DOC_PRINT_PATH\",Fn_Npd_Covdt(set_table.POL_ID,set_table.DOC_ID) \"COVDT\",FN_NPD_MREIEFDT(set_table.POL_ID) \"MREIEFDT\",Fn_Npd_Mbasplan(set_table.POL_ID) \"MBASPLAN\",FN_NPD_MRECEIPTN(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) \"MRECEIPTN\",Get_agent_codeNb(set_table.POL_ID) \"AGENTCODE\",Get_GO_Name(set_table.POL_ID) \"GONAME\",Get_Insured_IdNb(set_table.POL_ID) \"INSUREDID\",FN_NPD_UINNO(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) \"UINNO\",FN_NPD_CVGMDLPRM(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) \"CVGMDLPRM\",Fn_Npd_Rsusamt(set_table.POL_ID,set_table.DOC_ID) \"RSUSAMT\",Fn_Npd_Mgroupts(set_table.POL_ID,set_table.DOC_REF) \"MGROUPTS\",Fn_Npd_Magbphn(set_table.POL_ID,set_table.CLI_ID,set_table.DOC_ID) \"MAGBPHN\",Fn_Npd_Sagtname(set_table.POL_ID,set_table.CLI_ID,set_table.DOC_ID) \"SAGTNAME\",FN_NPD_SVAGTCD(set_table.POL_ID) \"SVAGTCD\",Fn_Npd_Brchname(set_table.POL_ID,set_table.CLI_ID,set_table.DOC_ID) \"BRCHNAME\",Fn_Npd_Mpoldue1(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) \"MPOLDUE1\",Fn_Npd_Mpoldue(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) \"MPOLDUE\",Fn_Npd_Polcvgterm(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) \"POLCVGTERM\",Fn_Npd_Mcomname(set_table.POL_ID,set_table.CLI_ID,set_table.DOC_ID) \"MCOMNAME\",Get_NFOpt(set_table.POL_ID) \"NFOPT\" FROM set_table WHERE set_table.set_no=?::int",
+      "columns": "setid",
+      "filename": "NB_SSPP_T.csv"
+    },
+    {
+      "tableName": "PROPOSAL_DATE",
+      "query": "SELECT fn_token_extract(C1,'NPS_FLG') \"NPS_FLG\",fn_token_extract(C1,'ProposalDt') \"PROPOSALDT\" FROM (SELECT Get_Proposal_Date(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "PROPOSAL_DATE.csv"
+    },
+    {
+      "tableName": "RECPIENT_DETAILS_NB",
+      "query": "SELECT fn_token_extract(C1,'Title') \"TITLE\",fn_token_extract(C1,'FName') \"FNAME\",fn_token_extract(C1,'SurName') \"SURNAME\",fn_token_extract(C1,'Add1') \"ADD1\",fn_token_extract(C1,'Add2') \"ADD2\",fn_token_extract(C1,'Add3') \"ADD3\",fn_token_extract(C1,'Add4') \"ADD4\",fn_token_extract(C1,'Add5') \"ADD5\",fn_token_extract(C1,'Addr5') \"ADDR5\",fn_token_extract(C1,'Tel') \"TEL\",fn_token_extract(C1,'Mob') \"MOB\",fn_token_extract(C1,'Ownemail1') \"OWNEMAIL\" FROM (SELECT Get_Recpient_details_nb(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GRDNB",
+      "columns": "setid",
+      "filename": "RECPIENT_DETAILS_NB.csv"
+    },
+    {
+      "tableName": "ISSUE_DATENB",
+      "query": "select fn_token_extract(C1,'STATUS_CHNG_DT') \"STATUS_CHNG_DT\",fn_token_extract(C1,'INFC_DT') \"INFC_DT\" from (select Get_issue_dateNb(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GRDNB",
+      "columns": "setid",
+      "filename": "ISSUE_DATENB.csv"
+    },
+    {
+      "tableName": "POL_OWNER",
+      "query": "select  fn_token_extract(C1,'Type') \"TYPE\",fn_token_extract(C1,'Name') \"NAME\",fn_token_extract(C1,'Ownemail') \"OWNEMAIL\" from (select get_pol_owner(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GRDNB",
+      "columns": "setid",
+      "filename": "POL_OWNER.csv"
+    },
+    {
+      "tableName": "POLICY_NUMBERNB",
+      "query": "select fn_token_extract(C1,'PolicyNo') \"POLICYNO\",fn_token_extract(C1,'Mfgocode') \"MFGOCODE\",fn_token_extract(C1,'PlaceofIss') \"PLACEOFISS\",fn_token_extract(C1,'Poi') \"POI\",fn_token_extract(C1,'ReceiptNo') \"RECEIPTNO\",fn_token_extract(C1,'Servtax') \"SERVTAX\",fn_token_extract(C1,'Contactno_Srvchlpdsk') \"CONTACTNO_SRVCHLPDSK\",fn_token_extract(C1,'EmailID_Srvchlpdsk') \"EMAILID_SRVCHLPDSK\",fn_token_extract(C1,'Clientid') \"CLIENTID\",fn_token_extract(C1,'PanId') \"PANID\",fn_token_extract(C1,'Paymeth') \"PAYMETH\",fn_token_extract(C1,'Drawdt') \"DRAWDT\",fn_token_extract(C1,'Pagtdtlflg') \"PAGTDTLFLG\",fn_token_extract(C1,'Pagtid') \"PAGTID\",fn_token_extract(C1,'Pagtnm') \"PAGTNM\",fn_token_extract(C1,'Adr1') \"ADR1\",fn_token_extract(C1,'Adr2') \"ADR2\",fn_token_extract(C1,'Adr3') \"ADR3\",fn_token_extract(C1,'City') \"CITY\",fn_token_extract(C1,'Zip') \"ZIP\",fn_token_extract(C1,'State') \"STATE\",fn_token_extract(C1,'Pagtph') \"PAGTPH\",fn_token_extract(C1,'Pagtmob') \"PAGTMOB\",fn_token_extract(C1,'Offaddress') \"OFFADDRESS\",fn_token_extract(C1,'Offname') \"OFFNAME\",fn_token_extract(C1,'Offdesg') \"OFFDESG\",fn_token_extract(C1,'Offcontact') \"OFFCONTACT\",fn_token_extract(C1,'Offmail') \"OFFMAIL\",fn_token_extract(C1,'Bankaccnum') \"BANKACCNUM\",fn_token_extract(C1,'Pagtemail') \"PAGTEMAIL\",fn_token_extract(C1,'Offaddressdrc') \"OFFADDRESSDRC\",fn_token_extract(C1,'Pagtlicno') \"PAGTLICNO\",fn_token_extract(C1,'Bonusopt') \"BONUSOPT\",fn_token_extract(C1,'Objective') \"OBJECTIVE\",fn_token_extract(C1,'Intplncnt') \"INTPLNCNT\",fn_token_extract(C1,'Goadrs') \"GOADRS\",fn_token_extract(C1,'Gono') \"GONO\",fn_token_extract(C1,'Pobnkid') \"POBNKID\",fn_token_extract(C1,'Pobnknm') \"POBNKNM\",fn_token_extract(C1,'Eappyn') \"EAPPYN\",fn_token_extract(C1,'Baseuin') \"BASEUIN\",fn_token_extract(C1,'OTPN') \"OTPN\",fn_token_extract(C1,'POL_MWPA_SECTION') \"POL_MWPA_SECTION\",fn_token_extract(C1,'OSP_U') \"OSP_U\",fn_token_extract(C1,'MAXMTDT') \"MAXMTDT\",fn_token_extract(C1,'ANNPRMFLAG') \"ANNPRMFLAG\",fn_token_extract(C1,'fstmnyback') \"FSTMNYBACK\",fn_token_extract(C1,'Oemail') \"OEMAIL\",fn_token_extract(C1,'Oadr1') \"OADR1\",fn_token_extract(C1,'Oadr2') \"OADR2\",fn_token_extract(C1,'Oadr3') \"OADR3\",fn_token_extract(C1,'Oadr4') \"OADR4\" from (select Get_policy_numberNb(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GPN",
+      "columns": "setid",
+      "filename": "POLICY_NUMBERNB.csv"
+    },
+    {
+      "tableName": "GO_CODE",
+      "query": "select fn_token_extract(C1,'GoCode') \"GOCODE\",fn_token_extract(C1,'Termtxt') \"TERMTXT\",fn_token_extract(C1,'IRDA_FLG') \"IRDA_FLG\",fn_token_extract(C1,'POLTYP') \"POLTYP\",fn_token_extract(C1,'FREELOOK_FLG') \"FREELOOK_FLG\" from (select Get_GO_Code(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GRDNB",
+      "columns": "setid",
+      "filename": "GO_CODE.csv"
+    },
+    {
+      "tableName": "INSURED_NAMENB",
+      "query": "select fn_token_extract(C1,'PlanCode') \"PLANCODE\",fn_token_extract(C1,'Polterm') \"POLTERM\",fn_token_extract(C1,'Title') \"TITLE\",fn_token_extract(C1,'FName') \"FNAME\",fn_token_extract(C1,'SurName') \"SURNAME\",fn_token_extract(C1,'FName1') \"FNAME1\",fn_token_extract(C1,'vc_return') \"VC_RETURN\",fn_token_extract(C1,'Sno') \"SNO\",fn_token_extract(C1,'InsuredNm') \"INSUREDNM\" from (select Get_insured_nameNb(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GIN",
+      "columns": "setid",
+      "filename": "INSURED_NAMENB.csv"
+    },
+    {
+      "tableName": "POL_OWNER_NEW",
+      "query": "select fn_token_extract(C1,'Title') \"TITLE\",fn_token_extract(C1,'FName1') \"FNAME1\",fn_token_extract(C1,'vc_return') \"VC_RETURN\",fn_token_extract(C1,'FName') \"FNAME\",fn_token_extract(C1,'SurName') \"SURNAME\" from (select get_pol_owner_new(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GPON",
+      "columns": "setid",
+      "filename": "POL_OWNER_NEW.csv"
+    },
+    {
+      "tableName": "OWNER_SRC_ID_SEX_ADD",
+      "query": "select fn_token_extract(C1,'Idnum') \"IDNUM\",fn_token_extract(C1,'Idcode') \"IDCODE\",fn_token_extract(C1,'Gendercode') \"GENDERCODE\",fn_token_extract(C1,'Add1') \"ADD1\",fn_token_extract(C1,'Add2') \"ADD2\",fn_token_extract(C1,'CityCode') \"CITYCODE\",fn_token_extract(C1,'Country') \"COUNTRY\",fn_token_extract(C1,'Ownage') \"OWNAGE\",fn_token_extract(C1,'Owntel') \"OWNTEL\",fn_token_extract(C1,'Ownmob') \"OWNMOB\",fn_token_extract(C1,'Ownmail') \"OWNMAIL\",fn_token_extract(C1,'Insuredrel') \"INSUREDREL\",fn_token_extract(C1,'Areacode') \"AREACODE\",fn_token_extract(C1,'CliBthDt') \"CLIBTHDT\" from (select Get_Owner_Src_ID_Sex_Add(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GOSISA",
+      "columns": "setid",
+      "filename": "OWNER_SRC_ID_SEX_ADD.csv"
+    },
+    {
+      "tableName": "INSURED_SRC_ID_SEX_ADD",
+      "query": "select fn_token_extract(C1,'Idcode') \"IDCODE\",fn_token_extract(C1,'Idnum') \"IDNUM\",fn_token_extract(C1,'Gendercode') \"GENDERCODE\",fn_token_extract(C1,'Add1') \"ADD1\",fn_token_extract(C1,'Add2') \"ADD2\",fn_token_extract(C1,'CityCode') \"CITYCODE\",fn_token_extract(C1,'Country') \"COUNTRY\",fn_token_extract(C1,'Dob') \"DOB\",fn_token_extract(C1,'Insage') \"INSAGE\" from (select Get_Insured_Src_ID_Sex_Add(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GISIS",
+      "columns": "setid",
+      "filename": "INSURED_SRC_ID_SEX_ADD.csv"
+    },
+    {
+      "tableName": "BENEFICIARIES",
+      "query": "select fn_token_extract(C1,'Intls') \"INTLS\",fn_token_extract(C1,'FName') \"FNAME\",fn_token_extract(C1,'NNAME') \"NNAME\",fn_token_extract(C1,'NOMREL') \"NOMREL_ONE\",fn_token_extract(C1,'NDOB') \"NDOB\",fn_token_extract(C1,'NAGE') \"NAGE\",fn_token_extract(C1,'NSEX') \"NSEX\",fn_token_extract(C1,'NPCT') \"NPCT\",fn_token_extract(C1,'Nomdob') \"NOMDOB\",fn_token_extract(C1,'Nomrel') \"NOMREL_TWO\" from (select Get_Beneficiaries(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GB",
+      "columns": "setid",
+      "filename": "BENEFICIARIES.csv"
+    },
+    {
+      "tableName": "POL_START_DT",
+      "query": "select fn_token_extract(C1,'PolIssDt') \"POLISSDT\",fn_token_extract(C1,'Uinflag') \"UINFLAG\",fn_token_extract(C1,'Uinflag1') \"UINFLAG1\",fn_token_extract(C1,'Uinflag2') \"UINFLAG2\",fn_token_extract(C1,'Uinflag3') \"UINFLAG3\",fn_token_extract(C1,'Uinflag4') \"UINFLAG4\",fn_token_extract(C1,'Kfdldflg') \"KFDLDFLG\",fn_token_extract(C1,'Bpuin') \"BPUIN\",fn_token_extract(C1,'RID1') \"RID1\",fn_token_extract(C1,'OSPUIN') \"OSPUIN\",fn_token_extract(C1,'SWPUIN_FLG') \"SWPUIN_FLG\",fn_token_extract(C1,'SWPUIN06_FLG') \"SWPUIN06_FLG\",fn_token_extract(C1,'GLIPUIN_FLG') \"GLIPUIN_FLG\",fn_token_extract(C1,'SWPUIN07_FLG') \"SWPUIN07_FLG\",fn_token_extract(C1,'ALLUIN_FLG') \"ALLUIN_FLG\",fn_token_extract(C1,'ACHOOK_FLG') \"ACHOOK_FLG\" from (select Get_pol_start_dt(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GPSD",
+      "columns": "setid",
+      "filename": "POL_START_DT.csv"
+    },
+    {
+      "tableName": "MODE",
+      "query": "select fn_token_extract(C1,'Mode') \"MODE\",fn_token_extract(C1,'DEFENCE') \"DEFENCE\",fn_token_extract(C1,'POL_INFC') \"POL_INFC\",fn_token_extract(C1,'JNTBSPLN') \"JNTBSPLN\",fn_token_extract(C1,'PBRK_IND') \"PBRK_IND\" from (select Get_Mode(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GM",
+      "columns": "setid",
+      "filename": "MODE.csv"
+    },
+    {
+      "tableName": "TOTAL_DOC_STAMP_VALUE_NB",
+      "query": "select fn_token_extract(C1,'Toalstamp_hdr') \"TOALSTAMP_HDR\",fn_token_extract(C1,'Toalstampvalue') \"TOALSTAMPVALUE\" from (select GET_total_DOC_STAMP_VALUE_NB(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GTDS",
+      "columns": "setid",
+      "filename": "TOTAL_DOC_STAMP_VALUE_NB.csv"
+    },
+    {
+      "tableName": "ULFUNDS",
+      "query": "select fn_token_extract(C1,'One') \"ONE\",fn_token_extract(C1,'Two') \"TWO\",fn_token_extract(C1,'Three') \"THREE\",fn_token_extract(C1,'Four') \"FOUR\",fn_token_extract(C1,'Five') \"FIVE\",fn_token_extract(C1,'Six') \"SIX\",fn_token_extract(C1,'Seven') \"SEVEN\",fn_token_extract(C1,'Eight') \"EIGHT\",fn_token_extract(C1,'Nine') \"NINE\",fn_token_extract(C1,'Ten') \"TEN\",fn_token_extract(C1,'Eleven') \"ELEVEN\",fn_token_extract(C1,'Twelve') \"TWELVE\",fn_token_extract(C1,'Thirteen') \"THIRTEEN\",fn_token_extract(C1,'Fourteen') \"FOURTEEN\",fn_token_extract(C1,'Fifteen') \"FIFTEEN\",fn_token_extract(C1,'Sixteen') \"SIXTEEN\",fn_token_extract(C1,'Seventeen') \"SEVENTEEN\",fn_token_extract(C1,'Dfaoptyn') \"DFAOPTYN\",fn_token_extract(C1,'Stpoptyn') \"STPOPTYN\",fn_token_extract(C1,'fnds_nm') \"FNDS_NM\" from (select ULFunds(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) UF",
+      "columns": "setid",
+      "filename": "ULFUNDS.csv"
+    },
+    {
+      "tableName": "APP_NM",
+      "query": "select fn_token_extract(C1,'Intls') \"INTLS\",fn_token_extract(C1,'FName') \"FNAME\",fn_token_extract(C1,'ADob') \"ADOB\",fn_token_extract(C1,'AGENDER') \"AGENDER\",fn_token_extract(C1,'AAGE') \"AAGE\" from (select Get_App_Nm(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GAN",
+      "columns": "setid",
+      "filename": "APP_NM.csv"
+    },
+    {
+      "tableName": "FOOTER",
+      "query": "Select fn_token_extract(c1,'FtCsc') \"FTCSC\",fn_token_extract(c1,'FtCsc1') \"FTCSC1\",fn_token_extract(c1,'FtCsc2') \"FTCSC2\",fn_token_extract(c1,'FtCsc3') \"FTCSC3\",fn_token_extract(c1,'FtCsc4') \"FTCSC4\",fn_token_extract(C1,'OMBPLAN') \"OMBPLAN\",fn_token_extract(c1,'FtCsc5') \"FTCSC5\",fn_token_extract(c1,'FtCsc6') \"FTCSC6\",fn_token_extract(c1,'FtCsc7') \"FTCSC7\",fn_token_extract(c1,'FtCsc8') \"FTCSC8\",fn_token_extract(c1,'FtCsc9') \"FTCSC9\",fn_token_extract(c1,'Ftemailid') \"FTEMAILID\",fn_token_extract(C1,'HNI') \"HNI\",fn_token_extract(C1,'Acctnum') \"ACCTNUM\" from (select Get_Footer(set_table.POL_ID,set_table.DOC_ID)C1 FROM set_table WHERE set_table.set_no=?::int) GF",
+      "columns": "setid",
+      "filename": "FOOTER.csv"
+    },
+    {
+      "tableName": "FOOTER_PRM20",
+      "query": "Select fn_token_extract(c1,'FtCsc') \"FTCSC\",fn_token_extract(c1,'FtCsc1') \"FTCSC1\",fn_token_extract(c1,'FtCsc2') \"FTCSC2\",fn_token_extract(c1,'FtCsc3') \"FTCSC3\",fn_token_extract(c1,'FtCsc4') \"FTCSC4\",fn_token_extract(C1,'OMBPLAN') \"OMBPLAN\",fn_token_extract(c1,'FtCsc5') \"FTCSC5\",fn_token_extract(c1,'FtCsc6') \"FTCSC6\",fn_token_extract(c1,'FtCsc7') \"FTCSC7\",fn_token_extract(c1,'FtCsc8') \"FTCSC8\",fn_token_extract(c1,'FtCsc9') \"FTCSC9\",fn_token_extract(c1,'Ftemailid') \"FTEMAILID\",fn_token_extract(C1,'HNI') \"HNI\",fn_token_extract(C1,'Acctnum') \"ACCTNUM\" from (select Get_Footer(set_table.POL_ID,'PRM20')C1 FROM set_table WHERE set_table.set_no=?::int) GF",
+      "columns": "setid",
+      "filename": "FOOTER_PRM20.csv"
+    },
+    {
+      "tableName": "SMOEMAIL",
+      "query": "select fn_token_extract(C1,'Smokercl') \"SMOKERCL\",fn_token_extract(C1,'Polownemail') \"POLOWNEMAIL\",fn_token_extract(C1,'Revpremamt') \"REVPREMAMT\",fn_token_extract(C1,'Smokercode1') \"SMOKERCODE1\",fn_token_extract(C1,'Polfacamt') \"POLFACAMT\" from (select GET_SMOEMAIL(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GS",
+      "columns": "setid",
+      "filename": "SMOEMAIL.csv"
+    },
+    {
+      "tableName": "MBINFO",
+      "query": "select fn_token_extract(C1,'Omboffice') \"OMBOFFICE\",fn_token_extract(C1,'Ombcontact') \"OMBCONTACT\",fn_token_extract(C1,'Ombtel') \"OMBTEL\",fn_token_extract(C1,'Ombfax') \"OMBFAX\",fn_token_extract(C1,'Ombmail') \"OMBMAIL\",fn_token_extract(C1,'Ombarea') \"OMBAREA\" from (select GET_OMBINFO(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GOF",
+      "columns": "setid",
+      "filename": "MBINFO.csv"
+    },
+    {
+      "tableName": "AADHAR",
+      "query": "select fn_token_extract(C1,'AADHAR') \"AADHAR\",fn_token_extract(C1,'CODE_ID') \"CODE_ID\" from (select GET_AADHAR(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GA",
+      "columns": "setid",
+      "filename": "AADHAR.csv"
+    },
+    {
+      "tableName": "RIDER_NBEIA",
+      "query": "select fn_token_extract(C1,'Sno') \"SNO\",fn_token_extract(C1,'EXCEPTION') \"EXCEPTION\",fn_token_extract(C1,'PPTERM') \"PPTERM\",fn_token_extract(C1,'PREMIUM') \"PREMIUM\",fn_token_extract(C1,'SUM_ASSURED') \"SUM_ASSURED\",fn_token_extract(C1,'PLNM') \"PLNM\",fn_token_extract(C1,'RIDER_COUNT') \"RIDER_COUNT\",fn_token_extract(C1,'TOTAL') \"TOTAL\" from (select Get_Rider_NBEIA(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) GRN",
+      "columns": "setid",
+      "filename": "RIDER_NBEIA.csv"
+    },
+    {
+      "tableName": "HELPLINENUM",
+      "query": "select fn_token_extract(C1,'HNIP') \"HNIP\",fn_token_extract(C1,'HNIU') \"HNIU\",fn_token_extract(C1,'NHNIP') \"NHNIP\",fn_token_extract(C1,'NHNIU') \"NHNIU\",fn_token_extract(C1,'AMSUREP') \"AMSUREP\",fn_token_extract(C1,'AMSUREU') \"AMSUREU\",fn_token_extract(C1,'AXISP') \"AXISP\",fn_token_extract(C1,'AXISU') \"AXISU\",fn_token_extract(C1,'EXTRAP') \"EXTRAP\",fn_token_extract(C1,'EXTRAU') \"EXTRAU\",fn_token_extract(C1,'VENTP') \"VENTP\",fn_token_extract(C1,'VENTU') \"VENTU\" from (select FN_NPD_HELPLINENUM(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) FNH",
+      "columns": "setid",
+      "filename": "HELPLINENUM.csv"
+    },
+    {
+      "tableName": "POLICY_DOCUMENT",
+      "query": "select fn_token_extract(c1,'POLICYTERM_IQC') \"POLICYTERM_IQC\",fn_token_extract(c1,'SBPAYABLE') \"SBPAYABLE\",fn_token_extract(c1,'TotModalPrem') \"TOTMODALPREM\",fn_token_extract(c1,'TotPremAmt') \"TOTPREMAMT\",fn_token_extract(c1,'Annualprm') \"ANNUALPRM\",fn_token_extract(c1,'Dynfndaloc_cb') \"DYNFNDALOC_CB\",fn_token_extract(c1,'Level') \"LEVEL1\",fn_token_extract(c1,'LIFLAG') \"LIFLAG\",fn_token_extract(c1,'CIFLAG') \"CIFLAG\",fn_token_extract(c1,'Maturitydt') \"MATURITYDT\",fn_token_extract(c1,'Nxtduedate') \"NXTDUEDATE\",fn_token_extract(c1,'Kfdflag') \"KFDFLAG\",fn_token_extract(c1,'Vestage') \"VESTAGE\",fn_token_extract(c1,'Endduedt') \"ENDDUEDT\",fn_token_extract(c1,'Rideryn') \"RIDERYN\",fn_token_extract(c1,'Maturitydue') \"MATURITYDUE\",fn_token_extract(c1,'Poltype') \"POLTYPE\",fn_token_extract(c1,'Ecsdt') \"ECSDT\",fn_token_extract(c1,'Rider1') \"RIDER1\",fn_token_extract(c1,'Plancode') \"PLANCODE\",fn_token_extract(c1,'ACCOVER') \"ACCOVER\",fn_token_extract(c1,'CIFLAG1') \"CIFLAG_ONE\",fn_token_extract(c1,'CILEVEL') \"CILEVEL\",fn_token_extract(c1,'Benefit') \"BENEFIT\",fn_token_extract(c1,'Benefit_count') \"BENEFIT_COUNT\",fn_token_extract(c1,'Modalprem1') \"MODALPREM1\",fn_token_extract(c1,'Dtprempayble1') \"DTPREMPAYBLE1\",fn_token_extract(c1,'ENDDATE') \"ENDDATE\",fn_token_extract(c1,'ENDDATE1') \"ENDDATE_ONE\",fn_token_extract(c1,'APPRLTION') \"APPRLTION\",fn_token_extract(c1,'QUOT_DUR') \"QUOT_DUR\",fn_token_extract(c1,'Frstanntinfo') \"FRSTANNTINFO\",fn_token_extract(c1,'Scndanntinfo') \"SCNDANNTINFO\",fn_token_extract(c1,'Gannname') \"GANNNAME\",fn_token_extract(c1,'Anntsrvtax') \"ANNTSRVTAX\",fn_token_extract(c1,'Anntpremtax') \"ANNTPREMTAX\",fn_token_extract(c1,'NPSCUST') \"NPSCUST\",fn_token_extract(c1,'PRICING_INT_RATE') \"PRICING_INT_RATE\",fn_token_extract(c1,'Kfdtotdprmpd') \"KFDTOTDPRMPD\",fn_token_extract(c1,'COVMUL') \"COVMUL\",fn_token_extract(c1,'INVST_STG') \"INVST_STG\",fn_token_extract(c1,'SUMASS_MUL') \"SUMASS_MUL\",fn_token_extract(c1,'Incbenefamt') \"INCBENEFAMT\",fn_token_extract(c1,'Incbenelamt') \"INCBENELAMT\",fn_token_extract(c1,'Termbene') \"TERMBENE\",fn_token_extract(c1,'Fannname') \"FANNNAME\",fn_token_extract(c1,'Enddate1') \"ENDDATE1\",fn_token_extract(c1,'LUMPSUM') \"LUMPSUM\",fn_token_extract(c1,'IM_INCOME') \"IM_INCOME\",fn_token_extract(c1,'INCOME_PERIOD') \"INCOME_PERIOD\",fn_token_extract(c1,'Gdsassured') \"GDSASSURED\",fn_token_extract(c1,'PAYO_MODE') \"PAYO_MODE\",fn_token_extract(c1,'XPRY_AGE') \"XPRY_AGE\",fn_token_extract(c1,'GDBAMT') \"GDBAMT\",fn_token_extract(c1,'ANNUALPRM1') \"ANNUALPRM1\",fn_token_extract(c1,'Kfdtodprmpd') \"KFDTODPRMPD\",fn_token_extract(c1,'RTBL') \"RTBL\",fn_token_extract(c1,'PB_FLAG') \"PB_FLAG\",fn_token_extract(c1,'DISCOUNT') \"DISCOUNT\",fn_token_extract(c1,'Death_Variant') \"DEATH_VARIANT\",fn_token_extract(c1,'ANNEXREF_VARIENT') \"ANNEXREF_VARIENT\",fn_token_extract(c1,'Sno') \"SNO\",fn_token_extract(c1,'Listofcvrge') \"LISTOFCVRGE\",fn_token_extract(c1,'Durofcvrge') \"DUROFCVRGE\",fn_token_extract(c1,'Insrdevent') \"INSRDEVENT\",fn_token_extract(c1,'Covrgeamt') \"COVRGEAMT\",fn_token_extract(c1,'Modalprem') \"MODALPREM\",fn_token_extract(c1,'Dtprempayble') \"DTPREMPAYBLE\",fn_token_extract(c1,'Annexref') \"ANNEXREF\",fn_token_extract(c1,'Flatextra') \"FLATEXTRA\",fn_token_extract(c1,'Unit') \"UNIT\",fn_token_extract(c1,'Policyterm') \"POLICYTERM\",fn_token_extract(c1,'Basicprem') \"BASICPREM\",fn_token_extract(c1,'Servtaxamt') \"SERVTAXAMT\",fn_token_extract(c1,'Deathbft') \"DEATHBFT\",fn_token_extract(c1,'Survivalbft') \"SURVIVALBFT\",fn_token_extract(c1,'Totannualprm') \"TOTANNUALPRM\",fn_token_extract(c1,'Deathrec') \"DEATHREC\",fn_token_extract(c1,'Nomrecived') \"NOMRECIVED\",fn_token_extract(c1,'Dthbenftten') \"DTHBENFTTEN\",fn_token_extract(c1,'PREMPAYY166') \"PREMPAYY166\",fn_token_extract(c1,'Totprempay') \"TOTPREMPAY166\",fn_token_extract(c1,'PREMPAYTERM166') \"PREMPAYTERM166\",fn_token_extract(c1,'POLTERM166') \"POLTERM166\",fn_token_extract(c1,'MPREMAMT166') \"MPREMAMT166\",fn_token_extract(c1,'PLANID166') \"PLANID166\",fn_token_extract(c1,'STBL_FLG') \"STBL_FLG\",fn_token_extract(c1,'UNIT_110') \"UNIT_110\",fn_token_extract(c1,'END_YEAR') \"END_YEAR\",fn_token_extract(c1,'GSAM_110') \"GSAM_110\",fn_token_extract(c1,'APREM_AMT') \"APREM_AMT\",fn_token_extract(c1,'PPMODE') \"PPMODE\",fn_token_extract(c1,'GSAM_137') \"GSAM_137\",fn_token_extract(c1,'GUAR_ADD_AMT') \"GUAR_ADD_AMT\",fn_token_extract(c1,'PAYO_AMT') \"PAYO_AMT\",fn_token_extract(c1,'PAYO_DT') \"PAYO_DT\",fn_token_extract(c1,'DEATHBFT1') \"DEATHBFT1\",fn_token_extract(c1,'DEATHBFT2') \"DEATHBFT2\",fn_token_extract(c1,'GUAR_ADD') \"GUAR_ADD\",fn_token_extract(c1,'SUMASS_MAT') \"SUMASS_MAT\",fn_token_extract(c1,'DEATH_BENF_MUL') \"DEATH_BENF_MUL\",fn_token_extract(c1,'INCOME_SRT_DT') \"INCOME_SRT_DT\",fn_token_extract(c1,'INCOME_BEN_PERIOD') \"INCOME_BEN_PERIOD\",fn_token_extract(c1,'INCOME_DEF_PERIOD') \"INCOME_DEF_PERIOD\",fn_token_extract(c1,'INCOME_SRT_YEAR') \"INCOME_SRT_YEAR\",fn_token_extract(c1,'DEATH_BENEFIT') \"DEATH_BENEFIT\",fn_token_extract(c1,'SUM_DEATH') \"SUM_DEATH\",fn_token_extract(c1,'SUM_MATURITY') \"SUM_MATURITY\",fn_token_extract(c1,'AGE_INSURED') \"AGE_INSURED\",fn_token_extract(c1,'POS_FLG') \"POS_FLG\",fn_token_extract(c1,'PCB_FLG') \"PCB_FLG\",fn_token_extract(c1,'PREM_VARIENT') \"PREM_VARIENT\",fn_token_extract(c1,'POL_VARIENT') \"POL_VARIENT\",fn_token_extract(c1,'INCOME_OPT') \"INCOME_OPT\",fn_token_extract(c1,'INCOME_CHSN') \"INCOME_CHSN\",fn_token_extract(c1,'VC_EXITING_FLG') \"VC_EXITING_FLG\",fn_token_extract(c1,'CONSENT_FLG') \"CONSENT_FLG\",fn_token_extract(c1,'FANNAGE') \"FANNAGE\",fn_token_extract(c1,'SANNNAME') \"SANNNAME\",fn_token_extract(c1,'SANNAGE') \"SANNAGE\" from (select policy_document(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "POLICY_DOCUMENT.csv"
+    },
+    {
+      "tableName": "NPD_BPLNNAM",
+      "query": "select fn_token_extract(c1,'Bplnnam') \"BPLNNAM\",fn_token_extract(c1,'Frequence') \"FREQUENCE\",fn_token_extract(c1,'Servprm') \"SERVPRM\" from (select Fn_Npd_Bplnnam(set_table.POL_ID,set_table.DOC_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_BPLNNAM.csv"
+    },
+    {
+      "tableName": "NPD_BPLNNAM_PRM20",
+      "query": "select fn_token_extract(c1,'Bplnnam') \"BPLNNAM\",fn_token_extract(c1,'Frequence') \"FREQUENCE\",fn_token_extract(c1,'Servprm') \"SERVPRM\" from (select Fn_Npd_Bplnnam(set_table.POL_ID,'PRM20') C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_BPLNNAM_PRM20.csv"
+    },
+    {
+      "tableName": "NPD_COVDT_PRM20",
+      "query": "select fn_token_extract(c1,'Covdt') \"COVDT\" from (select Fn_Npd_Covdt(set_table.POL_ID,set_table.DOC_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_COVDT_PRM20.csv"
+    },
+    {
+      "tableName": "NPD_CMPRM",
+      "query": "select fn_token_extract(c1,'Cmprm') \"CMPRM\" from (select Fn_Npd_Cmprm(set_table.POL_ID,set_table.DOC_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_CMPRM.csv"
+    },
+    {
+      "tableName": "NPD_CMPRM_PRM20",
+      "query": "select fn_token_extract(c1,'Cmprm') \"CMPRM\" from (select Fn_Npd_Cmprm(set_table.POL_ID,'PRM20') C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_CMPRM_PRM20.csv"
+    },
+    {
+      "tableName": "NPD_GDBAMT",
+      "query": "select fn_token_extract(c1,'Gdbamt') \"GDBAMT\" from (select FN_NPD_GDBAMT(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_GDBAMT.csv"
+    },
+    {
+      "tableName": "NPD_MUDRANKRCPT",
+      "query": "select fn_token_extract(c1,'Flag') \"FLAG\",fn_token_extract(c1,'Text') \"TEXT\",fn_token_extract(c1,'Number') \"NUMBER\" from (select FN_NPD_MUDRANKRCPT(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_MUDRANKRCPT.csv"
+    },
+    {
+      "tableName": "NPD_MUDRANKRCPT_PRM20",
+      "query": "select fn_token_extract(c1,'Flag') \"FLAG\",fn_token_extract(c1,'Text') \"TEXT\",fn_token_extract(c1,'Number') \"NUMBER\" from (select FN_NPD_MUDRANKRCPT(set_table.POL_ID,'PRM20',set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_MUDRANKRCPT_PRM20.csv"
+    },
+    {
+      "tableName": "NPD_PREMPAYTRM",
+      "query": "select fn_token_extract(c1,'Prempaytrm') \"PREMPAYTRM\",fn_token_extract(c1,'Matdt') \"MATDT\",fn_token_extract(c1,'ISSDT') \"ISSDT\" from (select Fn_Npd_Prempaytrm(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_PREMPAYTRM.csv"
+    },
+    {
+      "tableName": "NPD_PREMPAYTRM_PRM20",
+      "query": "select fn_token_extract(c1,'Prempaytrm') \"PREMPAYTRM\",fn_token_extract(c1,'Matdt') \"MATDT\",fn_token_extract(c1,'ISSDT') \"ISSDT\" from (select Fn_Npd_Prempaytrm(set_table.POL_ID,'PRM20',set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_PREMPAYTRM_PRM20.csv"
+    },
+    {
+      "tableName": "NPD_RINSTAMT",
+      "query": "select fn_token_extract(c1,'Totalrcharge') \"TOTALRCHARGE\" from (select Fn_Npd_Rinstamt(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_RINSTAMT.csv"
+    },
+    {
+      "tableName": "NPD_GSTIN",
+      "query": "select fn_token_extract(c1,'GSTINNO') \"GSTINNO\",fn_token_extract(c1,'GSTREGST') \"GSTREGST\" from (select FN_NPD_GSTIN(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_GSTIN.csv"
+    },
+    {
+      "tableName": "NPD_GSTTAB",
+      "query": "select fn_token_extract(c1,'BSACCODE') \"BSACCODE\" from (select FN_NPD_GSTTAB(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_GSTTAB.csv"
+    },
+    {
+      "tableName": "AGENT_NAMENB",
+      "query": "select fn_token_extract(c1,'Title') \"TITLE\",fn_token_extract(c1,'FName') \"FNAME\",fn_token_extract(c1,'SurName') \"SURNAME\" from (select Get_Agent_Namenb(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "AGENT_NAMENB.csv"
+    },
+    {
+      "tableName": "AGENT_TEL_NONB",
+      "query": "select fn_token_extract(c1,'Working1') \"WORKING1\",fn_token_extract(c1,'Working2') \"WORKING2\",fn_token_extract(c1,'Home1') \"HOME1\",fn_token_extract(c1,'Home2') \"HOME2\" from (select Get_Agent_Tel_noNb(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "AGENT_TEL_NONB.csv"
+    },
+    {
+      "tableName": "GET_NB13TAGS",
+      "query": "select fn_token_extract(c1,'Tagyn') \"TAGYN\" from (select FN_GET_NB13TAGS(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "GET_NB13TAGS.csv"
+    },
+    {
+      "tableName": "GST_CODE",
+      "query": "select fn_token_extract(c1,'Gstflag') \"GSTFLAG\",fn_token_extract(c1,'PAY_8') \"PAY_8\" from (select get_gst_code(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "GST_CODE.csv"
+    },
+    {
+      "tableName": "NPD_SUMASSUREDRDR",
+      "query": "select fn_token_extract(c1,'Totsaterm') \"TOTSATERM\" from (select Fn_Npd_Sumassuredrdr(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_SUMASSUREDRDR.csv"
+    },
+    {
+      "tableName": "NPD_MSNGPREM",
+      "query": "select fn_token_extract(c1,'Msngprem') \"MSNGPREM\" from (select Fn_Npd_Msngprem(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_MSNGPREM.csv"
+    },
+    {
+      "tableName": "NPD_EMAIL",
+      "query": "select fn_token_extract(c1,'Email') \"EMAIL\",fn_token_extract(c1,'Dob') \"DOB\",fn_token_extract(c1,'Custtype') \"CUSTTYPE\" from (select FN_NPD_EMAIL(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_EMAIL.csv"
+    },
+    {
+      "tableName": "NPD_ASGNAME",
+      "query": "select fn_token_extract(c1,'Asgname') \"ASGNAME\" from (select Fn_Npd_Asgname(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_ASGNAME.csv"
+    },
+    {
+      "tableName": "NPD_DATX",
+      "query": "select fn_token_extract(c1,'LLS') \"LLS\",fn_token_extract(c1,'Datx') \"DATX\" from (select Fn_Npd_Datx(set_table.POL_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_DATX.csv"
+    },
+    {
+      "tableName": "NPD_CVGTPREM",
+      "query": "select fn_token_extract(c1,'Cvgtprem') \"CVGTPREM\",fn_token_extract(c1,'DEATHBFT1') \"DEATHBFT1\",fn_token_extract(c1,'DEATHBFT2') \"DEATHBFT2\" from (select fn_npd_Cvgtprem(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_CVGTPREM.csv"
+    },
+    {
+      "tableName": "NPD_CVGTABSRDQT",
+      "query": "select fn_token_extract(c1,'CGSTB') \"CGSTB\",fn_token_extract(c1,'SGSTB') \"SGSTB\",fn_token_extract(c1,'IGSTB') \"IGSTB\",fn_token_extract(c1,'CGSTR') \"CGSTR\",fn_token_extract(c1,'SGSTR') \"SGSTR\",fn_token_extract(c1,'IGSTR') \"IGSTR\",fn_token_extract(c1,'Rinstchrgcgst') \"RINSTCHRGCGST\",fn_token_extract(c1,'Rinstchrgsgst') \"RINSTCHRGSGST\",fn_token_extract(c1,'Rinstchrgigst') \"RINSTCHRGIGST\",fn_token_extract(c1,'Totalchrg_new') \"TOTALCHRG_NEW\" from (select Fn_Npd_Cvgtabsrd(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_CVGTABSRDQT.csv"
+    },
+    {
+      "tableName": "NPD_CVGTABSRDQT_PRM20",
+      "query": "select fn_token_extract(c1,'CGSTB') \"CGSTB\",fn_token_extract(c1,'SGSTB') \"SGSTB\",fn_token_extract(c1,'IGSTB') \"IGSTB\",fn_token_extract(c1,'CGSTR') \"CGSTR\",fn_token_extract(c1,'SGSTR') \"SGSTR\",fn_token_extract(c1,'IGSTR') \"IGSTR\",fn_token_extract(c1,'Rinstchrgcgst') \"RINSTCHRGCGST\",fn_token_extract(c1,'Rinstchrgsgst') \"RINSTCHRGSGST\",fn_token_extract(c1,'Rinstchrgigst') \"RINSTCHRGIGST\",fn_token_extract(c1,'TOTALCHRG_NEW') \"TOTALCHRG_NEW\" from (select Fn_Npd_Cvgtabsrd(set_table.POL_ID,'PRM20',set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_CVGTABSRDQT_PRM20.csv"
+    },
+    {
+      "tableName": "NPD_BENEFADDRS",
+      "query": "select fn_token_extract(c1,'Phone') \"PHONE\",fn_token_extract(c1,'Misloc') \"MISLOC\" from (select FN_NPD_BENEFADDRS(set_table.POL_ID,set_table.DOC_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "NPD_BENEFADDRS.csv"
+    },
+    {
+      "tableName": "BNFT_FACEAMNT_DIVOPTIONS",
+      "query": "select fn_token_extract(c1,'Benface') \"BENFACE\",fn_token_extract(c1,'Pic_pcnt') \"PIC_PCNT\",fn_token_extract(c1,'Lod_pcnt') \"LOD_PCNT\",fn_token_extract(c1,'Offset_pcnt') \"OFFSET_PCNT\",fn_token_extract(c1,'Pua_pcnt') \"PUA_PCNT\",fn_token_extract(c1,'Poyt_pcnt') \"POYT_PCNT\",fn_token_extract(c1,'Recv_pcnt') \"RECV_PCNT\" from (select Get_Bnft_FaceAmnt_DivOptions(set_table.POL_ID) C1 FROM set_table WHERE set_table.set_no=?::int) PD",
+      "columns": "setid",
+      "filename": "BNFT_FACEAMNT_DIVOPTIONS.csv"
+    },
+    {
+      "tableName": "POLICY_BASERIDER",
+      "query": "select fn_token_extract(c1,'CIBR_T') \"CIBR_T\",fn_token_extract(c1,'COV_VARIENT') \"COV_VARIENT\",fn_token_extract(c1,'Sno') \"SNO\",fn_token_extract(c1,'Listofcvrge') \"LISTOFCVRGE\",fn_token_extract(c1,'Durofcvrge') \"DUROFCVRGE\",fn_token_extract(c1,'Insrdevent') \"INSRDEVENT\",fn_token_extract(c1,'Covrgeamt') \"COVRGEAMT\",fn_token_extract(c1,'Modalprem') \"MODALPREM\",fn_token_extract(c1,'Dtprempayble') \"DTPREMPAYBLE\",fn_token_extract(c1,'Annexref') \"ANNEXREF\",fn_token_extract(c1,'Flatextra') \"FLATEXTRA\",fn_token_extract(c1,'Unit') \"UNIT\",fn_token_extract(c1,'Policyterm') \"POLICYTERM\",fn_token_extract(c1,'Basicprem') \"BASICPREM\",fn_token_extract(c1,'Servtaxamt') \"SERVTAXAMT\",fn_token_extract(c1,'Survivalbft') \"SURVIVALBFT\",fn_token_extract(c1,'Totprempay') \"TOTPREMPAY\",fn_token_extract(c1,'Totannualprm') \"TOTANNUALPRM\",fn_token_extract(c1,'Dtprempayble1') \"DTPREMPAYBLE_ONE\",fn_token_extract(c1,'Enddate1') \"ENDDATE_ONE\",fn_token_extract(c1,'Cvgplanid') \"CVGPLANID\",fn_token_extract(c1,'Riduin') \"RIDUIN\",fn_token_extract(c1,'Typetxt') \"TYPETXT\",fn_token_extract(c1,'Premfreqamt') \"PREMFREQAMT\",fn_token_extract(c1,'Polissdt') \"POLISSDT\",fn_token_extract(c1,'MPREM_IQC') \"MPREM_IQC\",fn_token_extract(c1,'Title') \"TITLE\",fn_token_extract(c1,'FName') \"FNAME\",fn_token_extract(c1,'SurName') \"SURNAME\" from (select policy_baserider(set_table.POL_ID,set_table.DOC_REF) C1 FROM set_table WHERE set_table.set_no=?::int) PB",
+      "columns": "setid",
+      "filename": "POLICY_BASERIDER.csv"
+    }
+  ]
+}
